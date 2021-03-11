@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
-
+import 'package:peliculas/src/providers/peliculas_provider.dart';
 import 'package:peliculas/src/widgets/card_swiper_widget.dart';
+import 'package:peliculas/src/widgets/populares_footer.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+PeliculasProvider peliculasProvider = new PeliculasProvider();
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,20 +23,20 @@ class HomePage extends StatelessWidget {
           IconButton(icon: Icon(Icons.search), onPressed: () {})
         ],
       ),
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            _swiperTarjetas(),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SwiperTarjeta(peliculasProvider: peliculasProvider),
+              Footer(
+                peliculasProvider: peliculasProvider,
+              )
+            ],
+          ),
         ),
       ),
-    );
-  }
-
-  Widget _swiperTarjetas() {
-    return CardSwiper(
-      peliculas: [1, 2, 3, 4, 5],
     );
   }
 }
